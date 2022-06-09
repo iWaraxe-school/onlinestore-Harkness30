@@ -36,8 +36,15 @@ public class Product {
     }
 
     public void getProductInformation() {
-        String result = "Product name: " + this.name + " | Product rate: " + this.rate + " | Product price: " + this.price;
-        System.out.println(result);
+        try {Thread.sleep(1000);}
+        catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.printf("""
+                 Product name: \"%s\" \s
+                \t\t rate: %d \s
+                \t\t price: %.2f
+                """, this.name, this.rate, this.price);
     }
 
 }

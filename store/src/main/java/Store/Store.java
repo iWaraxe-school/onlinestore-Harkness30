@@ -23,7 +23,7 @@ public class Store {
 
     public void printAll() {
         for (Category c : categories) {
-            System.out.println(c.getName());
+            System.out.printf("\n\nCategory %s contains %d products:\n", c.getName(), c.getAllProducts().size());
             c.getAllProducts().forEach(Product::getProductInformation);
         }
     }
