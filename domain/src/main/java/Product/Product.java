@@ -15,29 +15,18 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public double getPrice() {
+        return price;
     }
 
     public int getRate() {
         return rate;
     }
 
-    public void setRate(int rate) {
-        this.rate = rate;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public void getProductInformation() {
-        try {Thread.sleep(1000);}
-        catch (InterruptedException e) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         System.out.printf("""
