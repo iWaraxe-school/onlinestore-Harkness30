@@ -5,7 +5,6 @@ import Product.Product;
 import Store.Store;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
-import utils.populator.RandomStorePopulator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -19,7 +18,7 @@ public class ReflectionsRunner {
         this.store = store;
     }
 
-    public static Map<Category, Integer> getCategoryProductMap() {
+    private Map<Category, Integer> getCategoryProductMap() {
 
         Map<Category, Integer> categories = new HashMap<>();
         Reflections ref = new Reflections("Category.subCategories");

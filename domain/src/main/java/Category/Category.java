@@ -8,7 +8,7 @@ import java.util.List;
 public class Category {
 
     private String name;
-    private static List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
     public Category(String name) {
         this.name = name;
@@ -22,7 +22,7 @@ public class Category {
         return this.name;
     }
 
-    public static List<Product> getAllProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 }

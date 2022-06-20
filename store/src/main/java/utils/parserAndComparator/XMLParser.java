@@ -18,6 +18,7 @@ import java.util.*;
 public class XMLParser {
 
     private static final File FILE = new File("store\\src\\main\\resources\\sortConfigs\\config.xml");
+    private static final File DEFAULT_CONFIG = new File("store\\src\\main\\resources\\sortConfigs\\DefaultConfig.xml");
     private static final Document DEFAULT_STATE = parse(FILE);
     private static Document config = parse(FILE);
     private static Node root = config.getFirstChild();
@@ -38,6 +39,20 @@ public class XMLParser {
             sortOptions.put(elements.item(i).getNodeName(), elements.item(i).getTextContent());
         }
         return sortOptions;
+    }
+    public Map<String, String> sortDefault (){
+        Map <String, String> defaultOptions = new LinkedHashMap<>();
+        Document document = parse(DEFAULT_CONFIG);
+        assert document != null;
+        Node root = document.getFirstChild();
+        NodeList tags = root.getChildNodes();
+        for (int i=0; i< tags.getLength(); i++){
+            if (tags.item(i).getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+        defaultOptions.put(tags.item(i).getNodeName(), tags.item(i).getTextContent());
+        }
+        return defaultOptions;
     }
 
     //parsing the xml-FILE to the Document-class object, to be processed by other methods

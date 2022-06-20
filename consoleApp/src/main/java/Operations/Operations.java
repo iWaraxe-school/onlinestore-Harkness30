@@ -13,6 +13,11 @@ public class Operations {
     private static final XMLParser PARSER = new XMLParser();
     private static MyComparator comparator = new MyComparator();
     private static Map<String, String> options;
+
+    public static void sortXML(List<Product> products){
+        List<Product> sorted = comparator.sortProducts(products, PARSER.sortDefault());
+        System.out.println(sorted);
+    }
     public static void sort(Scanner scanner, List<Product> products) {
 
         String field;
