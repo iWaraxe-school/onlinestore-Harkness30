@@ -13,18 +13,20 @@ public class Store {
         categories.add(category);
     }
 
-    public void addCategories(List<Category> list) {
-        categories.addAll(list);
-    }
-
-    public List<Category> getAllCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
+    public List<Product> getAllProducts(){
+        List<Product> result = new ArrayList<>();
+        for (Category c: categories){
+            result.addAll(c.getProducts());
+        }return result;
+    }
     public void printAll() {
         for (Category c : categories) {
-            System.out.printf("\n\nCategory %s contains %d products:\n", c.getName(), c.getAllProducts().size());
-            c.getAllProducts().forEach(Product::getProductInformation);
+            System.out.printf("\n\nCategory %s contains %d products:\n", c.getName(), c.getProducts().size());
+            System.out.println(c.getProducts());;
         }
     }
 }

@@ -22,7 +22,7 @@ public class Category {
         return this.name;
     }
 
-    public List<Product> getAllProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 }
