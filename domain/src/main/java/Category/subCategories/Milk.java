@@ -3,11 +3,15 @@ package Category.subCategories;
 import Category.Category;
 
 public class Milk extends Category {
-    public Milk() {
+    private static Milk milk;
+    private Milk() {
         super("Milk");
     }
 
-    public static Milk getInstance(){
-        return new Milk();
+    public static synchronized Milk getInstance(){
+        if (milk == null){
+         milk = new Milk();
+        }
+        return milk;
     }
 }

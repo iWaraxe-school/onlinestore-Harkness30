@@ -2,17 +2,21 @@ package utils.populator;
 
 import Product.Product;
 import com.github.javafaker.Faker;
-
+import Product.ProductBuilder;
 public class RandomStorePopulator {
     Faker faker = new Faker();
 
     public Product getRandomProduct() {
-        return new Product(getName(), getRate(), getPrice());
+        Product temp =  new ProductBuilder()
+                .setProductName(getName())
+                .setProductRate(getRate())
+                .setProductPrice(getPrice())
+                .buildProduct();
+        return temp;
     }
 
     private String getName() {
-        String name = faker.color().name() + " " + faker.animal().name();
-        return name;
+        return faker.color().name() + " " + faker.animal().name();
     }
 
     private int getRate() {
