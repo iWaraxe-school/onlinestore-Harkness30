@@ -5,9 +5,15 @@ public class Product implements Comparable<Product>{
     private int rate;
     private double price;
 
-    public Product(String name, int rate, double price) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setRate(int rate) {
         this.rate = rate;
+    }
+
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -36,4 +42,5 @@ public class Product implements Comparable<Product>{
     public int compareTo(Product o) {
         return this.compareTo(o);
     }
+
 }

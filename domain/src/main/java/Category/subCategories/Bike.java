@@ -3,10 +3,14 @@ package Category.subCategories;
 import Category.Category;
 
 public class Bike extends Category {
-    public Bike() {
+    private static Bike bike;
+    private Bike() {
         super("Bike");
     }
-    public static Bike getInstance(){
-        return new Bike();
+    public static synchronized Bike getInstance(){
+        if (bike ==null){
+            bike = new Bike();
+        }
+        return bike;
     }
 }

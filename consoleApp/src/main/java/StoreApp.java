@@ -1,5 +1,6 @@
 
-import Operations.Operations;
+import Operations.*;
+import Operations.Handlers.*;
 import Product.Product;
 import Store.Store;
 import utils.populator.ReflectionsRunner;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 
 public class StoreApp {
 
-    private static  final Store STORE = new Store();
+    private static final Store STORE = Store.getInstance();
     private static final ReflectionsRunner RUNNER = new ReflectionsRunner(STORE);
     private static final Scanner SCANNER = new Scanner(System.in);
     private static List<Product> PRODUCTS;
@@ -27,15 +28,15 @@ public class StoreApp {
                 "top - (to see the list of top 5 most expensive products)\n" +
                 "quit - (to exit the Store)");
 
-        while(true) {
-            switch (SCANNER.nextLine().toLowerCase()) {
-                case "sort by field" -> Operations.sort(SCANNER, PRODUCTS);
-                case "sort" -> Operations.sortXML(PRODUCTS);
-                case "top" -> Operations.top(PRODUCTS);
-                case "quit" -> Operations.quit();
-            }
+        while (true) {
+            Order order = new Order(SCANNER.nextLine().trim().toLowerCase(), PRODUCTS);
+            OrderHandler chain = new DefaultSortHandler();
+            chain.linkWith(new SortHandler())
+                    .linkWith(new TopHandler())
+                    .linkWith(new QuitHandler())
+                    .linkWith(new ClosingHandler());
+            chain.executeOrder(order);
         }
-
     }
 
 
