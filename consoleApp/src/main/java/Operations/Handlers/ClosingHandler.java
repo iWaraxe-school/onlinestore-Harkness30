@@ -1,10 +1,10 @@
 package Operations.Handlers;
 
-import Operations.Order;
+import Operations.Action;
 
-public class ClosingHandler extends OrderHandler{
+public class ClosingHandler extends ActionsHandler {
     @Override
-    public void executeOrder(Order order) {
+    public void executeAction(Action action) {
 
         System.out.println("No such command!");
     }

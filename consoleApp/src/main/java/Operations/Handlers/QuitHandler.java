@@ -1,20 +1,19 @@
 package Operations.Handlers;
 
-import Operations.Order;
-import Operations.OrderType;
+import Operations.Action;
+import Operations.ActionType;
 
-import static Operations.OrderType.QUIT;
+import static Operations.ActionType.QUIT;
 
-public class QuitHandler extends OrderHandler {
+public class QuitHandler extends ActionsHandler {
 
-    private OrderType orderType = QUIT;
+    private ActionType actionType = QUIT;
 
     @Override
-    public void executeOrder(Order order) {
-        if (orderType.getValue().equals(order.getType())) {
+    public void executeAction(Action action) {
+        if (actionType.getValue().equals(action.getType())) {
             PARSER.cleanUpConfigs();
             System.exit(1);
-        } else next.executeOrder(order);
-
+        } else next.executeAction(action);
     }
 }

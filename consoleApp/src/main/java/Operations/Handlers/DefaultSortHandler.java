@@ -1,23 +1,23 @@
 package Operations.Handlers;
 
-import Operations.Order;
-import Operations.OrderType;
+import Operations.Action;
+import Operations.ActionType;
 import Product.Product;
 
 import java.util.List;
 
-import static Operations.OrderType.*;
+import static Operations.ActionType.*;
 
-public class DefaultSortHandler extends OrderHandler {
-    private OrderType orderType = SORT;
+public class DefaultSortHandler extends ActionsHandler {
+    private ActionType actionType = SORT;
 
     @Override
-    public void executeOrder(Order order) {
+    public void executeAction(Action action) {
 
-        if (orderType.getValue().equals(order.getType())) {
-            List<Product> sorted = COMPARATOR.sortProducts(order.getProductsList(), PARSER.sortDefault());
+        if (actionType.getValue().equals(action.getType())) {
+            List<Product> sorted = COMPARATOR.sortProducts(action.getProductsList(), PARSER.sortDefault());
             System.out.println(sorted);
-        } else next.executeOrder(order);
+        } else next.executeAction(action);
 
     }
 }

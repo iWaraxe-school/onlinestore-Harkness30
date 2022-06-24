@@ -1,29 +1,29 @@
 package Operations.Handlers;
 
-import Operations.Order;
-import Operations.OrderType;
+import Operations.Action;
+import Operations.ActionType;
 import Product.Product;
 
 import java.util.List;
 import java.util.Map;
 
-import static Operations.OrderType.TOP;
+import static Operations.ActionType.TOP;
 
-public class TopHandler extends OrderHandler {
+public class TopHandler extends ActionsHandler {
 
-    private OrderType orderType = TOP;
+    private ActionType actionType = TOP;
 
     @Override
-    public void executeOrder(Order order) {
+    public void executeAction(Action action) {
 
-        if (orderType.getValue().equals(order.getType())) {
+        if (actionType.getValue().equals(action.getType())) {
             Map<String, String> options = PARSER.getSortOptions("price", "desc");
-            List<Product> top = COMPARATOR.sortProducts(order.getProductsList(), options);
+            List<Product> top = COMPARATOR.sortProducts(action.getProductsList(), options);
             System.out.println("Here is our 5 most expensive products:");
             for (int i = 0; i < 5; i++) {
                 System.out.println(top.get(i));
             }
-        } else next.executeOrder(order);
+        } else next.executeAction(action);
 
     }
 }
