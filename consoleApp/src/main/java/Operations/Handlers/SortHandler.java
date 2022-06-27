@@ -1,24 +1,24 @@
 package Operations.Handlers;
 
-import Operations.Order;
-import Operations.OrderType;
+import Operations.Action;
+import Operations.ActionType;
 import Product.Product;
 
 import java.util.List;
 import java.util.Scanner;
 
-import static Operations.OrderType.SORT_BY_EXACT_FIELD;
+import static Operations.ActionType.SORT_BY_EXACT_FIELD;
 
-public class SortHandler extends OrderHandler {
-    private OrderType orderType = SORT_BY_EXACT_FIELD;
+public class SortHandler extends ActionsHandler {
+    private ActionType actionType = SORT_BY_EXACT_FIELD;
     private Scanner scanner = new Scanner(System.in);
     private String field;
     private String sortingOrder;
 
     @Override
-    public void executeOrder(Order order) {
+    public void executeAction(Action action) {
 
-        if (orderType.getValue().equals(order.getType())) {
+        if (actionType.getValue().equals(action.getType())) {
 
             System.out.println("Select a field to sort by ( name / rate / price)");
             field = scanner.nextLine().toLowerCase();
@@ -27,10 +27,10 @@ public class SortHandler extends OrderHandler {
             sortingOrder = scanner.nextLine().toLowerCase();
 
             options = PARSER.getSortOptions(field, sortingOrder);
-            List<Product> sortedList = COMPARATOR.sortProducts(order.getProductsList(), options);
-            System.out.printf("Here is our products, sorted by the '%s' in '%s' order:\n", field, order);
+            List<Product> sortedList = COMPARATOR.sortProducts(action.getProductsList(), options);
+            System.out.printf("Here is our products, sorted by the '%s' in '%s' order:\n", field, action);
             System.out.println(sortedList);
-        } else next.executeOrder(order);
+        } else next.executeAction(action);
 
     }
 
