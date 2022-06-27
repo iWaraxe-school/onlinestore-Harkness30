@@ -1,9 +1,12 @@
 
-import Operations.*;
+import Operations.Action;
 import Operations.Handlers.*;
 import Product.Product;
 import Store.Store;
+import utils.DBConnection.DBConnector;
+import utils.DBConnection.TablesCreator;
 import utils.PurchasedProductsListCleaner;
+import utils.populator.DBFiller;
 import utils.populator.ReflectionsRunner;
 
 import java.util.List;
@@ -16,7 +19,8 @@ public class StoreApp {
     private static List<Product> PRODUCTS;
 
     public static void main(String[] args) {
-        RUNNER.initStorageData();
+        new TablesCreator().initTables();
+        new DBFiller().filInTheStore();
         PRODUCTS = STORE.getAllProducts();
         STORE.printAll();
         new Thread(new PurchasedProductsListCleaner()).start(); // Independent thread,
@@ -38,7 +42,7 @@ public class StoreApp {
                     .linkWith(new TopHandler())
                     .linkWith(new QuitHandler())
                     .linkWith(new CheckCartHandler())
-                    .linkWith(new OrderCreatingHandler())       // create order functionality
+                    .linkWith(new OrderCreatingHandler())
                     .linkWith(new ClosingHandler());
             chain.executeAction(action);
         }

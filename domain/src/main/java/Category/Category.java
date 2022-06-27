@@ -1,6 +1,7 @@
 package Category;
 
 import Product.Product;
+import utils.DBConnection.DBQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,6 @@ public class Category {
     }
 
     public List<Product> getProducts() {
-        return products;
+        return new DBQuery().getAllProductsFromDB();
     }
 }
