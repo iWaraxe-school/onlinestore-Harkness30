@@ -1,6 +1,8 @@
 package utils;
 
 import Store.Store;
+import utils.DBConnection.DBQuery;
+
 import java.util.concurrent.TimeUnit;
 
 public class PurchasedProductsListCleaner implements Runnable {
@@ -10,7 +12,7 @@ public class PurchasedProductsListCleaner implements Runnable {
     @Override
     public void run() {
         while (true) {
-            store.cleanUpPurchasedProductsList();
+            new DBQuery().cleanUpPurchasedProductsTable();
             try {
                 TimeUnit.MINUTES.sleep(TIME_LIMIT);
             } catch (InterruptedException e) {

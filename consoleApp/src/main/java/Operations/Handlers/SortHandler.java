@@ -2,9 +2,9 @@ package Operations.Handlers;
 
 import Operations.Action;
 import Operations.ActionType;
-import Product.Product;
+import utils.DBConnection.DBQuery;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import static Operations.ActionType.SORT_BY_EXACT_FIELD;
@@ -26,10 +26,8 @@ public class SortHandler extends ActionsHandler {
             System.out.println("Select a sorting order ( asc / desc )");
             sortingOrder = scanner.nextLine().toLowerCase();
 
-            options = PARSER.getSortOptions(field, sortingOrder);
-            List<Product> sortedList = COMPARATOR.sortProducts(action.getProductsList(), options);
-            System.out.printf("Here is our products, sorted by the '%s' in '%s' order:\n", field, action);
-            System.out.println(sortedList);
+            System.out.printf("Here is our products, sorted by the '%s' in '%s' order:\n", field, sortingOrder);
+            new DBQuery().printSortedListFromDB(Map.of(field, sortingOrder));
         } else next.executeAction(action);
 
     }

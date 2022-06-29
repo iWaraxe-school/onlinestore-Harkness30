@@ -2,9 +2,7 @@ package Operations.Handlers;
 
 import Operations.Action;
 import Operations.ActionType;
-import Product.Product;
-
-import java.util.List;
+import utils.DBConnection.DBQuery;
 
 import static Operations.ActionType.*;
 
@@ -15,8 +13,7 @@ public class DefaultSortHandler extends ActionsHandler {
     public void executeAction(Action action) {
 
         if (actionType.getValue().equals(action.getType())) {
-            List<Product> sorted = COMPARATOR.sortProducts(action.getProductsList(), PARSER.sortDefault());
-            System.out.println(sorted);
+            new DBQuery().printSortedListFromDB(PARSER.sortDefault());
         } else next.executeAction(action);
 
     }
