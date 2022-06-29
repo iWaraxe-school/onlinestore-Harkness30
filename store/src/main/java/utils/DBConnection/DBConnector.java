@@ -1,8 +1,5 @@
 package utils.DBConnection;
 
-import Store.Store;
-import utils.populator.DBFiller;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -25,7 +22,6 @@ public class DBConnector {
         return connector;
     }
 
-    // --------ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ--------
     public  Connection connect() {
         try {
             Class.forName(DB_Driver);
@@ -43,7 +39,6 @@ public class DBConnector {
         return  null;
     }
 
-    // ------------ЗАКРЫТИЕ СОЕДИНЕНИЯ------------
     public void closeConnection() {
         try {
             new TablesCreator().dropTables();

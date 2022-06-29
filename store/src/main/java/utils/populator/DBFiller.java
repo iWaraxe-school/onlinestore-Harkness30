@@ -1,17 +1,14 @@
 package utils.populator;
 
 import Category.Category;
-import Product.Product;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import utils.DBConnection.DBConnector;
-
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class DBFiller {
@@ -35,7 +32,6 @@ public class DBFiller {
                 statement.setString(1, temp.getName());
                 statement.executeUpdate();
                 statement.close();
-                System.out.println("Category " + temp.getName() + " added");
             } catch (InvocationTargetException | IllegalAccessException |SQLException | NoSuchMethodException exception) {
                 exception.printStackTrace();
             }

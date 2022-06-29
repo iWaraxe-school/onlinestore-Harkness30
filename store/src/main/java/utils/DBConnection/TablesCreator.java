@@ -8,6 +8,7 @@ public class TablesCreator {
     public void initTables(){
         createCategoriesTable();
         createProductsTable();
+        createPurchasedProductsTable();
     }
 
     private void createCategoriesTable() {
@@ -16,10 +17,8 @@ public class TablesCreator {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"Categories\" \n" +
                     "(\"name\" TEXT NOT NULL UNIQUE);");
             statement.close();
-                    System.out.println("Categories Table created!");
         } catch (SQLException SQLex) {
             SQLex.printStackTrace();
-            System.out.println("SQL-error while creating table Categories.");
         }
     }
     private void createProductsTable() {
@@ -33,10 +32,23 @@ public class TablesCreator {
                     "\"price\" REAL,\n" +
                     "FOREIGN KEY(category) REFERENCES \"Categories\");");
             statement.close();
-            System.out.println("Table Products created!");
         } catch (SQLException SQLex) {
             SQLex.printStackTrace();
-            System.out.println("SQL-error while creating table Products.");
+        }
+    }
+    private void createPurchasedProductsTable() {
+        try {
+            Statement statement = connector.getConnection().createStatement();
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"PurchasedProducts\" (\n" +
+                    "\"productId\" INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                    "\"name\" TEXT NOT NULL,\n" +
+                    "\"category\" TEXT NOT NULL,\n" +
+                    "\"rate\" INTEGER,\n" +
+                    "\"price\" REAL,\n" +
+                    "FOREIGN KEY(category) REFERENCES \"Categories\");");
+            statement.close();
+        } catch (SQLException SQLex) {
+            SQLex.printStackTrace();
         }
     }
 
@@ -45,6 +57,7 @@ public class TablesCreator {
             Statement statement = connector.getConnection().createStatement();
             statement.executeUpdate("DROP TABLE Categories;");
             statement.executeUpdate("DROP TABLE Products;");
+            statement.executeUpdate("DROP TABLE PurchasedProducts;");
             statement.close();
         } catch (SQLException SQLex) {
             SQLex.printStackTrace();

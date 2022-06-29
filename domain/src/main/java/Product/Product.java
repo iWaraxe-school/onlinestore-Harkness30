@@ -21,14 +21,6 @@ public class Product implements Comparable<Product>{
         return name;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public int getRate() {
-        return rate;
-    }
-
     @Override
     public String toString() {
         return String.format("""

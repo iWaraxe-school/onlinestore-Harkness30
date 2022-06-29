@@ -3,6 +3,7 @@ package Operations.Handlers;
 import Operations.Action;
 import Operations.ActionType;
 import Store.Store;
+import utils.DBConnection.DBQuery;
 
 import static Operations.ActionType.*;
 
@@ -11,7 +12,7 @@ public class CheckCartHandler extends ActionsHandler{
     @Override
     public void executeAction(Action action) {
         if (actionType.getValue().equals(action.getType())) {
-            System.out.println(Store.getInstance().getPurchasedProducts());
+            new DBQuery().printCartFromDB();
     } else next.executeAction(action);
     }
 }

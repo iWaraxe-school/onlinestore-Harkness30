@@ -15,15 +15,11 @@ public class Category {
         this.name = name;
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
-    }
+
 
     public String getName() {
         return this.name;
     }
 
-    public List<Product> getProducts() {
-        return new DBQuery().getAllProductsFromDB();
-    }
+
 }

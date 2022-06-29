@@ -15,15 +15,15 @@ public class RandomStorePopulator {
         return temp;
     }
 
-    public String getName() {
+     String getName() {
         return faker.color().name() + " " + faker.animal().name();
     }
 
-    public int getRate() {
+     int getRate() {
         return faker.random().nextInt(0, 5);
     }
 
-    public double getPrice() {
+     double getPrice() {
         return faker.random().nextInt(10, 100) * faker.random().nextDouble();
     }
 }

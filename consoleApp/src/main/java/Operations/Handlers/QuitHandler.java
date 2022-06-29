@@ -13,7 +13,6 @@ public class QuitHandler extends ActionsHandler {
     @Override
     public void executeAction(Action action) {
         if (actionType.getValue().equals(action.getType())) {
-            PARSER.cleanUpConfigs();
             DBConnector.getInstance().closeConnection();
             System.exit(1);
         } else next.executeAction(action);
