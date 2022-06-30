@@ -27,7 +27,56 @@ public class DBQuery {
             e.printStackTrace();
         }
     }
-
+    public String getAllProductsFromDB() {
+        StringBuilder resultSTR = new StringBuilder();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM Products");
+            while (result.next()) {
+            resultSTR.append("Product name: ")
+                    .append(result.getString("name"))
+                    .append("\n").append("rate: ")
+                    .append(result.getInt("rate"))
+                    .append("\n").append("price: ")
+                    .append(result.getDouble("price"))
+                    .append("\n");
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSTR.toString();
+    }
+    public String getCategoriesFromDB() {
+        String resultSTR = "";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM Categories");
+            while (result.next()) {
+                resultSTR+= "Category name: " + result.getString("name")+"\n";
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSTR;
+    }
+    public String getPurchasedProductsFromDB() {
+        String resultSTR = "";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM PurchasedProducts");
+            while (result.next()) {
+                resultSTR+= "Product name: " + result.getString("name")+"\n"+
+                        "rate: " + result.getInt("rate")+"\n"+
+                        "price: " + result.getDouble("price")+"\n";
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSTR;
+    }
     /**
      * StringBuffer collects all order options from config.XML to sql query
      * For example, with default config:
