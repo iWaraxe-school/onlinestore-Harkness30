@@ -1,7 +1,6 @@
 package Operations.Ordering;
 
 import Product.Product;
-import Store.Store;
 import utils.DBConnection.DBQuery;
 
 import java.util.Random;

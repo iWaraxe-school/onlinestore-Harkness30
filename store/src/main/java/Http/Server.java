@@ -2,6 +2,7 @@ package Http;
 
 
 import Http.HttpHandlers.GetRequestHandler;
+import Http.HttpHandlers.PostRequestHandler;
 import Http.HttpHandlers.RootHandler;
 import com.sun.net.httpserver.HttpServer;
 
@@ -17,9 +18,11 @@ public class Server {
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/", new RootHandler());
-        server.createContext("/go", new GetRequestHandler());
+        server.createContext("/get", new GetRequestHandler());
+        server.createContext("/post", new PostRequestHandler());
         server.setExecutor(threadPoolExecutor);
         server.start();
+
     }
 
 }

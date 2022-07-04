@@ -9,6 +9,7 @@ import java.util.Scanner;
 public abstract class ActionsHandler {
     static final XMLParser PARSER = new XMLParser();
     static final Scanner scanner = new Scanner(System.in);
+    static final Request request = new Request();
 
     ActionsHandler next;
 

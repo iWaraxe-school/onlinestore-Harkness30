@@ -1,12 +1,16 @@
 package Http.HttpHandlers;
 
+import Product.Product;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.apache.commons.lang3.StringEscapeUtils;
 import utils.DBConnection.DBQuery;
+import utils.parserAndComparator.XMLParser;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetRequestHandler implements HttpHandler {
     @Override
@@ -15,8 +19,6 @@ public class GetRequestHandler implements HttpHandler {
         if ("GET".equals(exchange.getRequestMethod())) {
             params = parseGetRequest(exchange);
             handleGetRequest(exchange, params);
-        } else if ("POST".equals(exchange.getRequestMethod())) {
-            params = parsePostRequest(exchange);
         }
 
     }
@@ -29,11 +31,6 @@ public class GetRequestHandler implements HttpHandler {
                 .split("=")[1];
     }
 
-    private String parsePostRequest(HttpExchange exchange) {
-        String o = null;
-        return o;
-    }
-
     private void handleGetRequest(HttpExchange exchange, String params) {
         OutputStream output = exchange.getResponseBody();
         String result = null;
@@ -42,6 +39,8 @@ public class GetRequestHandler implements HttpHandler {
             case "categories" -> result = q.getCategoriesFromDB();
             case "cart" -> result = q.getPurchasedProductsFromDB();
             case "products" -> result = q.getAllProductsFromDB();
+            case "sort" -> result = q.getSortedListFromDB(new XMLParser().sortDefault());
+            case "top" -> result = q.getTopFiveFromDB();
         }
         String htmlResponse = StringEscapeUtils.escapeHtml4(result);
 
