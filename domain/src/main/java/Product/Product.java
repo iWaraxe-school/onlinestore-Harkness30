@@ -24,7 +24,7 @@ public class Product implements Comparable<Product>{
     @Override
     public String toString() {
         return String.format("""
-                 Product name: "%s" \s
+                 Product name: %s \s
                 \t\t rate: %d \s
                 \t\t price: %.2f
                 """, this.name, this.rate, this.price);

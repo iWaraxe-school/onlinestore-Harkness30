@@ -27,7 +27,7 @@ public class SortHandler extends ActionsHandler {
             sortingOrder = scanner.nextLine().toLowerCase();
 
             System.out.printf("Here is our products, sorted by the '%s' in '%s' order:\n", field, sortingOrder);
-            new DBQuery().printSortedListFromDB(Map.of(field, sortingOrder));
+            System.out.println(new DBQuery().getSortedListFromDB(Map.of(field, sortingOrder)));
         } else next.executeAction(action);
 
     }
