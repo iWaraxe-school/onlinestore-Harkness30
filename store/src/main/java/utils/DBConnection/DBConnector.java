@@ -26,7 +26,6 @@ public class DBConnector {
         try {
             Class.forName(DB_Driver);
             connection = DriverManager.getConnection(DB_URL);
-            System.out.println("База Подключена!");
             return connection;
 
         } catch (ClassNotFoundException e) {

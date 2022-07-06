@@ -2,38 +2,93 @@ package utils.DBConnection;
 
 import Product.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class DBQuery {
 
     Connection connection = DBConnector.getInstance().getConnection();
 
-    public void printAllProductsFromDB() {
+    public String getAllProductsFromDB() {
+        List<Product> prods = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM Products");
             while (result.next()) {
-                System.out.printf("""                                               
-                                 Product name: "%s" \s
-                                \t\t rate: %d \s
-                                \t\t price: %.2f
-                                """,
-                        result.getString("name"),
-                        result.getInt("rate"),
-                        result.getDouble("price"));
+            prods.add(new ProductBuilder()
+                    .setProductName(result.getString("name"))
+                    .setProductRate(result.getInt("rate"))
+                    .setProductPrice(result.getDouble("price"))
+                    .buildProduct());
             }
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return prods.toString()
+                .replace(',', ' ')
+                .replace('[', ' ')
+                .replace(']', ' ');
     }
-
+    public String getOrderableProductsFromDB() {
+        String orderButton = "";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM Products");
+            while (result.next()) {
+                 orderButton += String.format("<form action = 'http://localhost:8081/post' method = 'post'>" +
+                        "        <input type='submit' name='%s' value='%s' />\n" +
+                        "    </form>", result.getString("name"), result.getString("name")) + "\n";
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  orderButton;
+    }
+    public String getCategoriesFromDB() {
+        String resultSTR = "";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM Categories");
+            while (result.next()) {
+                resultSTR+= "Category name: " + result.getString("name")+"\n";
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSTR;
+    }
+    public String getPurchasedProductsFromDB() {
+        StringBuilder resultSTR = new StringBuilder();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM PurchasedProducts");
+            while (result.next()) {
+                resultSTR.append(String.format("""
+                                 Product name: %s \s
+                                \t\t rate: %d \s
+                                \t\t price: %.2f
+                                """,
+                        result.getString("name"),
+                        result.getInt("rate"),
+                        result.getDouble("price")));
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSTR.toString();
+    }
     /**
      * StringBuffer collects all order options from config.XML to sql query
      * For example, with default config:
      * String order = "SELECT * FROM Products ORDER BY  name asc, rate asc, price desc;"
      */
-    public void printSortedListFromDB(Map<String, String> map) {
+    public String getSortedListFromDB(Map<String, String> map) {
+        List<Product> sorted = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             StringBuffer buffer = new StringBuffer("SELECT * FROM Products ORDER BY ;");
@@ -44,39 +99,45 @@ public class DBQuery {
             String order = buffer.deleteCharAt(buffer.length() - 2).toString();
             ResultSet result = statement.executeQuery(order);
             while (result.next()) {
-                System.out.printf("""                                               
-                                 Product name: "%s" \s
-                                \t\t rate: %d \s
-                                \t\t price: %.2f
-                                """, result.getString("name"),
-                        result.getInt("rate"),
-                        result.getDouble("price"));
+                sorted.add(new ProductBuilder()
+                        .setProductName(result.getString("name"))
+                        .setProductRate(result.getInt("rate"))
+                        .setProductPrice(result.getDouble("price"))
+                        .buildProduct()
+                );
             }
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return sorted.toString()
+                .replace(',', ' ')
+                .replace('[', ' ')
+                .replace(']', ' ');
     }
 
-    public void printTopFiveFromDB() {
+    public String getTopFiveFromDB() {
+        StringBuilder request = new StringBuilder();
         try {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(
                     "SELECT * FROM Products\n" + "ORDER BY\n price DESC;");
             for (int i = 0; i < 5; i++) {
-                System.out.printf("""
-                                 Product name: "%s" \s
+                result.next();
+                request.append(String.format("""
+                                 Product name: %s \s
                                 \t\t rate: %d \s
                                 \t\t price: %.2f
-                                """, result.getString("name"),
+                                """,
+                        result.getString("name"),
                         result.getInt("rate"),
-                        result.getDouble("price"));
-                result.next();
+                        result.getDouble("price")));
             }
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return request.toString();
     }
 
     public Product getProductFromDB(String name) {
@@ -117,25 +178,6 @@ public class DBQuery {
 
         } catch (SQLException SQLex) {
             SQLex.printStackTrace();
-        }
-    }
-
-    public void printCartFromDB() {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM PurchasedProducts;");
-            while (result.next()) {
-                System.out.printf("""                                               
-                                 Product name: "%s" \s
-                                \t\t rate: %d \s
-                                \t\t price: %.2f
-                                """, result.getString("name"),
-                        result.getInt("rate"),
-                        result.getDouble("price"));
-            }
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
